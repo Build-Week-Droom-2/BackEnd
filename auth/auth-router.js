@@ -17,5 +17,26 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/login', (req, res) => {
+    let {email, password} = req.body;
+
+    Auth.findBy( {email} )
+    .first()
+    .then(user => {
+        if (user && bcrypt.compareSync(password, user.password)) {
+            req.session.email = user.email;
+            req.session.loggedIn = true;
+            res.status(200).json({
+                message: `You are now signed in ${user.email}`,
+            });
+        } else {
+            res.status(401).json({ message: 'Invalid Credentials'});
+        }
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    });
+});
+
 
 module.exports = router;
