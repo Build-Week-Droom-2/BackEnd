@@ -20,7 +20,7 @@ module.exports = {
   testing: {
     client: 'sqlite3',
     connection: {
-      filename:'./database/deoom.db3'
+      filename:'./database/droom.db3'
     },
   },
   production: {
